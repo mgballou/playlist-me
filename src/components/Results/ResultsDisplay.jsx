@@ -1,10 +1,10 @@
-import ResultNode from "./ResultNode"
 
+import TrackNode from "../TrackNode/TrackNode"
 
 
 function ResultsDisplay ({resultsData}) {
-    const resultsNodeList = resultsData.map((result, idx) => 
-        <ResultNode 
+    const resultsNodeList = resultsData?.map((result, idx) => 
+        <TrackNode 
         key={idx} 
         tName={result.tName}
         tArtist={result.tArtist}
@@ -15,6 +15,7 @@ function ResultsDisplay ({resultsData}) {
     )
     return (
         <div>
+            <h3>Results</h3>
             {resultsNodeList}
             
         </div>

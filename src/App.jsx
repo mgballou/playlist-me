@@ -3,38 +3,58 @@ import { useState } from 'react'
 /// import necessary components
 
 import './App.css'
-import SongSelectorForm from './components/SongSelector/SongSelectorForm'
+import SongSearchForm from './components/Search/SearchForm'
 import ResultsDisplay from './components/Results/ResultsDisplay'
+import SearchDisplay from './components/Search/SearchDisplay'
 
 function App() {
   // define app state
 
-  const authToken = "BQAt75pU_UgapDOIFlsuN4fvL3TRjgGDPPhNdnAFvf-LOF2VUxoQPYtMUNfoC-Fztk8Xms2BHdnK6plSJoNMV4gMbtn9JGtV5uPVmCVDUW5cIXWJmm6Q"
+  const authToken = "BQDdDgttOZ54KWX4ql4zaJOR2UlyoUaT4HWALShHaTZKtAPDZ_-zAhtbzp33OoJQ3Tq35EhXb8u44o-ltRnY4Vyb6MEMqLxA5W4OGbMLLJVZA626DvCi"
+
+  const [query, setQuery] = useState("")
+
+  const [searchData, setSearchData] = useState(null)
 
 
-  const [formData, setFormData] = useState({
-    song1: "",
-    song2: "",
-    song3: "",
-    song4: "",
-    song5: ""
+  const [resultsData, setResultsData] = useState(null)
 
-  })
+  function addQuery(query){
+    console.log(query)
+    setQuery(query)
+  }
 
-  const [resultsData, setResultsData] = useState([
-    {tName:"", tArtist:"", tLink:""},
-    {tName:"", tArtist:"", tLink:""},
-    {tName:"", tArtist:"", tLink:""},
-    {tName:"", tArtist:"", tLink:""},
-    {tName:"", tArtist:"", tLink:""}
-  ])
+ 
 
+  async function handleSearch(evt){
+    evt.preventDefault()
+    try {
+      let url = "https://api.spotify.com/v1/search"
+      let params = new URLSearchParams({
+        q: query,
+        market: 'US',
+        type: 'track'
+  
+      })
 
+      let options = {
+        method: 'GET',
+        headers: {'Authorization': `Bearer ${authToken}`},
+           
+      }
 
-  function handleFormChange(evt) {
-    const newFormData = { ...formData, [evt.target.name]: evt.target.value }
-    setFormData(newFormData)
-    console.log(formData)
+      url = url + "?" + params.toString()
+
+      let response = await fetch(url, options)
+      let responseData = await response.json()
+      console.log(responseData)
+      let searchResponse = responseData.tracks.items
+
+      setSearchData(searchResponse)
+    } catch (error) {
+      console.log(error)
+    }
+    
   }
 
   async function handleFetchResults(evt){
@@ -58,33 +78,18 @@ function App() {
 
       let response = await fetch(url, options)
       let responseData = await response.json()
-      // console.log(resData)
-      // responseData.tracks.forEach((track, idx) => {
-
-      //   let tName = track.name
-      //   let tArtist = track.artists[0].name
-      //   let tLink = track.external_urls.spotify
-
-      //   console.log(tName, tArtist, tLink)
-      // }
-      //   )
       
-       const newResultsData = responseData.tracks.map(track=>{
+      const newResultsData = responseData.tracks.map(track=>{
           return {
             tName: track.name,
             tArtist: track.artists[0].name,
-            tLink: track.external_urls.spotify
+            tLink: track.external_urls.spotify,
+            spotifyId: track.id
           }
         })
-
-        console.log(newResultsData)
-
         setResultsData(newResultsData)
-
-      
     } catch (error) {
-      console.log(error)
-      
+      console.log(error)  
     }
   }
 
@@ -94,9 +99,9 @@ function App() {
     // use hooks and proper binding to attach inputs to state
     //pass down props defined in state above
     <>
-      <SongSelectorForm formData={formData} handleFormChange={handleFormChange} />
+      <SearchDisplay addQuery={addQuery} handleSearch={handleSearch} searchData={searchData}/>
       <ResultsDisplay resultsData={resultsData} />
-      <button onClick={handleFetchResults}></button>
+      <button onClick={handleFetchResults}>Get recommendations</button>
 
     </>
   )

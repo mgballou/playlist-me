@@ -1,14 +1,14 @@
 import {useState} from 'react'
 
 
-function SongSearchForm({addQuery, handleSearch}){
+function SongSearchForm({addQuery, handleSearch, formData, setFormData}){
 
     // const songList = props.songs.map((s, idx) => 
     //     <SongInput key={idx} song={s} index={idx} songs={props.songs} setSongs={props.setSongs}/>
 
     // )
 
-    const [formData, setFormData] = useState("")
+   
 
     function handleFormChange(evt) {
       const newFormData = evt.target.value
@@ -21,7 +21,7 @@ function SongSearchForm({addQuery, handleSearch}){
         <>
         <form onSubmit={handleSearch}>
         <label>Song 1</label>
-        <input name="song1" value={formData} onChange={handleFormChange}/>
+        <input name="song" value={formData} onChange={handleFormChange}/>
         <button type="submit">Search</button>
         
       </form>

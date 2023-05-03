@@ -1,0 +1,7 @@
+  const [resultsData, setResultsData] = useState([
+    {tName:"", tArtist:"", tLink:""},
+    {tName:"", tArtist:"", tLink:""},
+    {tName:"", tArtist:"", tLink:""},
+    {tName:"", tArtist:"", tLink:""},
+    {tName:"", tArtist:"", tLink:""}
+  ])

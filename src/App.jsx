@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 
 /// import necessary components
 
@@ -10,7 +10,9 @@ import SearchDisplay from './components/Search/SearchDisplay'
 function App() {
   // define app state
 
-  const authToken = "BQCPGQJMN89ShDv71sBA2v324zcrqGQqwwC_YTglZWCOqLx3YnVJC9S4rExjBFR1oFeq5JXvhqDhE7kKbjgQGxpYGhfWjLsEuMpcI4SJ7xZvOhsre8V9"
+  const [authToken, setAuthToken] = useState(null)
+
+  // const authToken = "BQB6xGruXjmG2_TiUAXGVWwQT4OR--rr-dwkS6yT9TNLA3nuXkUtf2S6j7QsBeIIWRzl-vVV6zZkZ1AbBV084Jco2VchkulwJV_myTNcgMnI0BXbCBGJ"
 
   const [query, setQuery] = useState("")
 
@@ -37,8 +39,6 @@ function App() {
     setSongSelections(newSelections)
 
   }
-
-
 
   async function handleSearch(evt) {
     evt.preventDefault()
@@ -68,7 +68,6 @@ function App() {
     } catch (error) {
       console.log(error)
     }
-
   }
 
   async function handleFetchResults(evt) {
@@ -108,6 +107,30 @@ function App() {
     }
   }
 
+  async function getAuthToken(){
+    let url = 'https://us-east4-playlist-me-385520.cloudfunctions.net/retrievekey'
+    let options = {
+      method: "POST",
+      redirect: 'follow',
+    
+    }
+
+    try {
+      let response = await fetch(url, options)
+      console.log(response)
+      let tokenData = await response.json()
+      console.log(tokenData)
+      setAuthToken(tokenData.access_token)
+
+      
+    } catch (err) {
+      console.log(err)
+      
+    }
+
+  }
+
+  useEffect(()=> {getAuthToken()}, [])
 
   return (
     // return the primary page of the app, laid out accordingly

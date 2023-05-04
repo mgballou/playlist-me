@@ -117,9 +117,9 @@ function App() {
 
     try {
       let response = await fetch(url, options)
-      console.log(response)
+      // console.log(response)
       let tokenData = await response.json()
-      console.log(tokenData)
+      // console.log(tokenData)
       setAuthToken(tokenData.access_token)
 
       

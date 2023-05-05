@@ -3,16 +3,16 @@ import { useState, useEffect } from 'react'
 /// import necessary components
 
 import './App.css'
+import './Skeleton.scss'
+import Header from './components/Header/Header'
 import SongsDisplay from './components/SongSelections/SongsDisplay'
 import ResultsDisplay from './components/Results/ResultsDisplay'
-import SearchDisplay from './components/Search/SearchDisplay'
+import ControlsDisplay from './components/ControlPanel/ControlsDisplay'
 
 function App() {
   // define app state
 
   const [authToken, setAuthToken] = useState(null)
-
-  // const authToken = "BQB6xGruXjmG2_TiUAXGVWwQT4OR--rr-dwkS6yT9TNLA3nuXkUtf2S6j7QsBeIIWRzl-vVV6zZkZ1AbBV084Jco2VchkulwJV_myTNcgMnI0BXbCBGJ"
 
   const [query, setQuery] = useState("")
 
@@ -37,6 +37,14 @@ function App() {
   function addSelection(selection) {
     let newSelections = [...songSelections, selection]
     setSongSelections(newSelections)
+
+  }
+
+  function resetAll() {
+    clearSearch()
+    setQuery("")
+    setResultsData(null)
+    setSongSelections([])
 
   }
 
@@ -107,12 +115,12 @@ function App() {
     }
   }
 
-  async function getAuthToken(){
+  async function getAuthToken() {
     let url = 'https://us-east4-playlist-me-385520.cloudfunctions.net/retrievekey'
     let options = {
       method: "POST",
       redirect: 'follow',
-    
+
     }
 
     try {
@@ -122,40 +130,48 @@ function App() {
       // console.log(tokenData)
       setAuthToken(tokenData.access_token)
 
-      
+
     } catch (err) {
       console.log(err)
-      
+
     }
 
   }
 
-  useEffect(()=> {getAuthToken()}, [])
+
+
+  useEffect(() => { getAuthToken() }, [])
 
   return (
-    // return the primary page of the app, laid out accordingly
-    // use hooks and proper binding to attach inputs to state
-    //pass down props defined in state above
     <>
-      <SongsDisplay 
-      songSelections={songSelections}
-      authToken={authToken} 
-      />
+      <Header />
+      <main>
+        <section className="container">
+          <p className='text-centered'>select up to five songs and receive tailored recommendations</p>
+          <div className='row'>
 
-      <SearchDisplay
-        addQuery={addQuery}
-        handleSearch={handleSearch}
-        searchData={searchData}
-        formData={formData}
-        setFormData={setFormData}
-        clearSearch={clearSearch}
-        addSelection={addSelection}
-      />
+            <SongsDisplay
+              songSelections={songSelections}
+              authToken={authToken}
+              handleFetchResults={handleFetchResults}
+            />
 
-      <ResultsDisplay
-        resultsData={resultsData} />
-      <button onClick={handleFetchResults}>Get recommendations</button>
+            {resultsData ? <ResultsDisplay resultsData={resultsData} resetAll={resetAll} /> :
+              <ControlsDisplay
+                addQuery={addQuery}
+                handleSearch={handleSearch}
+                searchData={searchData}
+                formData={formData}
+                setFormData={setFormData}
+                clearSearch={clearSearch}
+                addSelection={addSelection}
 
+              />}
+          </div>
+
+        </section>
+
+      </main>
     </>
   )
 }

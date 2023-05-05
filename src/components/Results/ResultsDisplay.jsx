@@ -2,7 +2,8 @@
 import TrackNode from "../TrackNode/TrackNode"
 
 
-function ResultsDisplay ({resultsData}) {
+
+function ResultsDisplay ({resultsData, resetAll}) {
     const resultsNodeList = resultsData?.map((result, idx) => 
         <TrackNode 
         key={idx} 
@@ -13,10 +14,15 @@ function ResultsDisplay ({resultsData}) {
         />
 
     )
+
+  
+
+
     return (
-        <div>
-            <h3>Results</h3>
+        <div className="one-half column flex-parent panel">
+            <h4>Results</h4>
             {resultsNodeList}
+            <button onClick={resetAll}>Start Over</button>
             
         </div>
     )

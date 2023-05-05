@@ -2,7 +2,7 @@ function TrackNode({index, tName, tArtist, tLink}){
     
 
     return (
-            <p index={index}># {index +1}: {tName} by {tArtist}</p>
+        <p className="track-node" index={index}>{`# ${index +1}: ${tName} by ${tArtist}`}</p>
 
     )
 }

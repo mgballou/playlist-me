@@ -3,7 +3,7 @@ import { useState, useEffect } from 'react'
 /// import necessary components
 
 import './App.css'
-import './Skeleton.scss'
+import './skeleton.scss'
 import Header from './components/Header/Header'
 import SongsDisplay from './components/SongSelections/SongsDisplay'
 import ResultsDisplay from './components/Results/ResultsDisplay'

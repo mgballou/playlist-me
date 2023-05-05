@@ -25,7 +25,7 @@ function App() {
   const [songSelections, setSongSelections] = useState([])
 
   function addQuery(query) {
-    console.log(query)
+   
     setQuery(query)
   }
 

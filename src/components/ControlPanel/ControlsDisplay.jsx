@@ -15,7 +15,7 @@ function ControlsDisplay({ addQuery, handleSearch, searchData, formData, setForm
       
         addSelection(songId)
         setSongCount(songCount+1)
-        console.log(songCount)
+        // console.log(songCount)
         clearSearch()
     }
 

@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react"
 import TrackNode from "../TrackNode/TrackNode"
 
-function SongsDisplay({songSelections, authToken}){
+function SongsDisplay({songSelections, authToken, handleFetchResults}){
 
     const [selectionsData, setSelectionsData] = useState(null)
 
@@ -50,9 +50,12 @@ function SongsDisplay({songSelections, authToken}){
     )
 
     return (
-        <div>
-            Songs display
+        <div className="one-half column flex-parent panel">
+            <h4 className="text-centered">
+            Your Selections
+                </h4>
             {songsNodeList}
+            {songsNodeList ? <button onClick={handleFetchResults}>Get recommendations</button> : <></>}
         </div>
     )
 }

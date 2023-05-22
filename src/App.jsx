@@ -69,7 +69,6 @@ function App() {
 
       let response = await fetch(url, options)
       let responseData = await response.json()
-      console.log(responseData)
       let searchResponse = responseData.tracks.items
 
       setSearchData(searchResponse)

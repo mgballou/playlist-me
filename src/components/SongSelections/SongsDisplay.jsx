@@ -43,7 +43,7 @@ function SongsDisplay({songSelections, authToken, handleFetchResults}){
         key={idx} 
         tName={selectedSong.name}
         tArtist={selectedSong.artists[0].name}
-        tLink={selectedSong.href}
+        tLink={selectedSong.external_urls.spotify}
         index={idx}
         />
 

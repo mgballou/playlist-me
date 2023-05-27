@@ -44,6 +44,7 @@ function SongsDisplay({songSelections, authToken, handleFetchResults}){
         tName={selectedSong.name}
         tArtist={selectedSong.artists[0].name}
         tLink={selectedSong.external_urls.spotify}
+        albumArtwork={selectedSong.album.images[1].url}
         index={idx}
         />
 

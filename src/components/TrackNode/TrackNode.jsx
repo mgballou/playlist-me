@@ -1,8 +1,23 @@
-function TrackNode({index, tName, tArtist, tLink}){
-    
+function TrackNode({ index, tName, tArtist, tLink, albumArtwork }) {
+
+    console.log(albumArtwork)
+
 
     return (
-        <a href={tLink} target="_blank" className="track-node button" index={index}>{`# ${index +1}: ${tName} by ${tArtist}`}</a>
+
+        <div className="track-node flex-parent">
+            <img className="album-artwork"
+                src={albumArtwork}
+                />
+            <a href={tLink} target="_blank" className="button" index={index}>
+
+
+                <span>
+                    {`# ${index + 1}: ${tName} by ${tArtist}`}
+                </span>
+            </a>
+
+        </div>
 
     )
 }

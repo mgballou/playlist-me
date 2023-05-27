@@ -99,13 +99,15 @@ function App() {
 
       let response = await fetch(url, options)
       let responseData = await response.json()
+      console.log(responseData.tracks[0])
 
       const newResultsData = responseData.tracks.map(track => {
         return {
           tName: track.name,
           tArtist: track.artists[0].name,
           tLink: track.external_urls.spotify,
-          spotifyId: track.id
+          spotifyId: track.id,
+          albumArtwork: track.album.images[1].url
         }
       })
       setResultsData(newResultsData)

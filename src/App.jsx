@@ -24,6 +24,14 @@ function App() {
 
   const [songSelections, setSongSelections] = useState([])
 
+  const [adjustmentData, setAdjustmentData] = useState({
+    target_acousticness: 0,
+    target_danceability: 0,
+    target_energy: 0,
+    target_instrumentalness: 0,
+    target_liveness: 0
+  })
+
   function addQuery(query) {
    
     setQuery(query)
@@ -69,7 +77,6 @@ function App() {
 
       let response = await fetch(url, options)
       let responseData = await response.json()
-      console.log(responseData)
       let searchResponse = responseData.tracks.items
 
       setSearchData(searchResponse)
@@ -100,13 +107,15 @@ function App() {
 
       let response = await fetch(url, options)
       let responseData = await response.json()
+      
 
       const newResultsData = responseData.tracks.map(track => {
         return {
           tName: track.name,
           tArtist: track.artists[0].name,
           tLink: track.external_urls.spotify,
-          spotifyId: track.id
+          spotifyId: track.id,
+          albumArtwork: track.album.images[1].url
         }
       })
       setResultsData(newResultsData)
@@ -150,13 +159,7 @@ function App() {
           <p className='text-centered'>select up to five songs and receive tailored recommendations</p>
           <div className='row'>
 
-            <SongsDisplay
-              songSelections={songSelections}
-              authToken={authToken}
-              handleFetchResults={handleFetchResults}
-            />
-
-            {resultsData ? <ResultsDisplay resultsData={resultsData} resetAll={resetAll} /> :
+          {resultsData ? <ResultsDisplay resultsData={resultsData} resetAll={resetAll} /> :
               <ControlsDisplay
                 addQuery={addQuery}
                 handleSearch={handleSearch}
@@ -165,8 +168,18 @@ function App() {
                 setFormData={setFormData}
                 clearSearch={clearSearch}
                 addSelection={addSelection}
+                adjustmentData={adjustmentData}
+                setAdjustmentData={setAdjustmentData}
 
               />}
+
+            <SongsDisplay
+              songSelections={songSelections}
+              authToken={authToken}
+              handleFetchResults={handleFetchResults}
+            />
+
+            
           </div>
 
         </section>

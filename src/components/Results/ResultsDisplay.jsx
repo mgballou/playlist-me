@@ -10,6 +10,7 @@ function ResultsDisplay ({resultsData, resetAll}) {
         tName={result.tName}
         tArtist={result.tArtist}
         tLink={result.tLink}
+        albumArtwork={result.albumArtwork}
         index={idx}
         />
 
@@ -21,7 +22,10 @@ function ResultsDisplay ({resultsData, resetAll}) {
     return (
         <div className="one-half column flex-parent panel">
             <h4>Results</h4>
+            {resultsNodeList ? <div className=" flex-parent overflow-scroll u-full-width">
             {resultsNodeList}
+
+            </div> : <></> }
             <button onClick={resetAll}>Start Over</button>
             
         </div>

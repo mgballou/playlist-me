@@ -43,7 +43,8 @@ function SongsDisplay({songSelections, authToken, handleFetchResults}){
         key={idx} 
         tName={selectedSong.name}
         tArtist={selectedSong.artists[0].name}
-        tLink={selectedSong.href}
+        tLink={selectedSong.external_urls.spotify}
+        albumArtwork={selectedSong.album.images[1].url}
         index={idx}
         />
 
@@ -54,7 +55,10 @@ function SongsDisplay({songSelections, authToken, handleFetchResults}){
             <h4 className="text-centered">
             Your Selections
                 </h4>
+            {songsNodeList ? <div className=" flex-parent overflow-scroll u-full-width">
             {songsNodeList}
+
+            </div> : <></> }
             {songsNodeList ? <button onClick={handleFetchResults}>Get recommendations</button> : <></>}
         </div>
     )

@@ -1,9 +1,10 @@
 import SearchForm from "./SearchForm";
 import TrackNode from "../TrackNode/TrackNode";
+import AdjustmentKnobs from "./AdjustmentKnobs";
 
 import { useState } from "react";
 
-function ControlsDisplay({ addQuery, handleSearch, searchData, formData, setFormData, addSelection, clearSearch }) {
+function ControlsDisplay({ addQuery, handleSearch, searchData, formData, setFormData, addSelection, clearSearch, adjustmentData, setAdjustmentData }) {
     const [songCount, setSongCount] = useState(0)
 
 
@@ -53,10 +54,15 @@ function ControlsDisplay({ addQuery, handleSearch, searchData, formData, setForm
             setFormData={setFormData} 
             />: <></>}
             
-            {searchResultsList ? <div className=" flex-parent overflow-scroll">
+            {searchResultsList ? <div className=" flex-parent overflow-scroll u-full-width">
             {searchResultsList}
 
             </div> : <></> }
+
+            {/* {songCount >0 ? <AdjustmentKnobs
+            adjustmentData={adjustmentData}
+            setAdjustmentData={setAdjustmentData}
+            /> : <></>} */}
             
 
         </div>

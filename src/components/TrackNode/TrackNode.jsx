@@ -1,21 +1,36 @@
 function TrackNode({ index, tName, tArtist, tLink, albumArtwork }) {
 
-    console.log(albumArtwork)
+    
 
 
     return (
 
-        <div className="track-node flex-parent">
+        <div className="track-node row">
+            
+            <div className="one-half column">
+                
             <img className="album-artwork"
                 src={albumArtwork}
                 />
-            <a href={tLink} target="_blank" className="button" index={index}>
+            </div>
+
+            <div className="one-half column text-centered">
+                <p>
+                    {tName}
+                </p>
+
+                <p>
+                {tArtist}
+                </p>
+            <a href={tLink} target="_blank" className="button reduce-padding" index={index}>
+                Listen on Spotify
 
 
-                <span>
-                    {`# ${index + 1}: ${tName} by ${tArtist}`}
-                </span>
             </a>
+
+
+            </div>
+
 
         </div>
 

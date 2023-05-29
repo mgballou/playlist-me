@@ -24,6 +24,14 @@ function App() {
 
   const [songSelections, setSongSelections] = useState([])
 
+  const [adjustmentData, setAdjustmentData] = useState({
+    target_acousticness: 0,
+    target_danceability: 0,
+    target_energy: 0,
+    target_instrumentalness: 0,
+    target_liveness: 0
+  })
+
   function addQuery(query) {
    
     setQuery(query)
@@ -99,7 +107,7 @@ function App() {
 
       let response = await fetch(url, options)
       let responseData = await response.json()
-      console.log(responseData.tracks[0])
+      
 
       const newResultsData = responseData.tracks.map(track => {
         return {
@@ -151,13 +159,7 @@ function App() {
           <p className='text-centered'>select up to five songs and receive tailored recommendations</p>
           <div className='row'>
 
-            <SongsDisplay
-              songSelections={songSelections}
-              authToken={authToken}
-              handleFetchResults={handleFetchResults}
-            />
-
-            {resultsData ? <ResultsDisplay resultsData={resultsData} resetAll={resetAll} /> :
+          {resultsData ? <ResultsDisplay resultsData={resultsData} resetAll={resetAll} /> :
               <ControlsDisplay
                 addQuery={addQuery}
                 handleSearch={handleSearch}
@@ -166,8 +168,18 @@ function App() {
                 setFormData={setFormData}
                 clearSearch={clearSearch}
                 addSelection={addSelection}
+                adjustmentData={adjustmentData}
+                setAdjustmentData={setAdjustmentData}
 
               />}
+
+            <SongsDisplay
+              songSelections={songSelections}
+              authToken={authToken}
+              handleFetchResults={handleFetchResults}
+            />
+
+            
           </div>
 
         </section>

@@ -22,7 +22,7 @@ function ResultsDisplay ({resultsData, resetAll}) {
     return (
         <div className="one-half column flex-parent panel">
             <h4>Results</h4>
-            {resultsNodeList ? <div className=" flex-parent overflow-scroll">
+            {resultsNodeList ? <div className=" flex-parent overflow-scroll u-full-width">
             {resultsNodeList}
 
             </div> : <></> }
